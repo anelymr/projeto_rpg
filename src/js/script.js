@@ -19,7 +19,6 @@ function startGame() {
 
 function atualizarInventario() {
   document.getElementById("ouro").textContent = inventory.ouro;
-  document.getElementById("itens").textContent = inventory.items.length > 0 ? inventory.items.join(", ") : "Nenhum";
 }
 
 const cenas = {
@@ -64,9 +63,6 @@ const cenas = {
     presente_comercial: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do comercial']. Aqui, aceite este presente.",
         imagem: "src/imagens/boots.png",
-        acoes: () => {
-            inventory.items.push("Botas de agilidade");
-        },
         opcoes: [
             { texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
@@ -89,9 +85,6 @@ const cenas = {
     presente_gusta: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gusta']. Aqui, aceite este presente.",
         imagem: "src/imagens/mana_potion.png",
-        acoes: () => {
-            inventory.items.push("Poção de mana");
-        },
         opcoes: [
             { texto: "Falar com a maga dos testes", cena: "presente_my"},
             { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
@@ -105,9 +98,6 @@ const cenas = {
     presente_my: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da my']. Aqui, aceite este presente.",
         imagem: "src/imagens/coin.png",
-        acoes: () => {
-            inventory.ouro += 50;
-        },
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
             { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
@@ -153,9 +143,6 @@ const cenas = {
     presente_wagner: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do wagner']. Aqui, aceite este presente.",
         imagem: "src/imagens/potion.png",
-        acoes: () => {
-            inventory.items.push("Poção de vida");
-        },
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
             { texto: "Falar com a maga dos testes", cena: "presente_my"},
@@ -169,9 +156,6 @@ const cenas = {
     presente_gui: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gui']. Aqui, aceite este presente.",
         imagem: "src/imagens/sword.png",
-        acoes: () => {
-            inventory.items.push("Espada Mistica");
-        },
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
             { texto: "Falar com a maga dos testes", cena: "presente_my"},
@@ -262,8 +246,6 @@ const cenas = {
 
 function mostrarCena(id) {
     const cena = cenas[id];
-    atualizarInventario();
-
     if(cena.acoes) cena.acoes();
 
     message.innerText = typeof cena.texto === "function" ? cena.texto() : cena.texto;
