@@ -35,7 +35,7 @@ const cenas = {
 
     cadastro: {
         texto: "Você encontra duas guardiãs. Você se aproxima para falar com elas.",
-        imagem: "imagens/guardias_cadastro.png",
+        imagem: "src/imagens/guardias_cadastro.png",
         opcoes: [
             { texto: "Falar com as guardiãs", cena: "presente_cadastro"}
         ]
@@ -43,7 +43,7 @@ const cenas = {
 
     presente_cadastro: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do cadastro']. Aqui, aceite este presente.",
-        imagem: "imagens/bag_coins.png",
+        imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             inventory.ouro += 100;
          },
@@ -55,7 +55,7 @@ const cenas = {
 
     comercial: {
         texto: "Você encontra um grupo de comerciantes. Você se aproxima para falar com eles.",
-        imagem: "imagens/comerciantes.png",
+        imagem: "src/imagens/comerciantes.png",
         opcoes: [
             { texto: "Falar com os comerciantes", cena: "presente_comercial"}
         ]
@@ -63,7 +63,7 @@ const cenas = {
 
     presente_comercial: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do comercial']. Aqui, aceite este presente.",
-        imagem: "imagens/boots.png",
+        imagem: "src/imagens/boots.png",
         acoes: () => {
             inventory.items.push("Botas de agilidade");
         },
@@ -74,7 +74,7 @@ const cenas = {
 
     ti: {
         texto: "Você avista um local com um grupo de magos. Eles estão te esperando. Parece que cada um deseja falar com você.",
-        imagem: "imagens/magos3.png",
+        imagem: "src/imagens/magos3.png",
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
             { texto: "Falar com a maga dos testes", cena: "presente_my"},
@@ -88,7 +88,7 @@ const cenas = {
 
     presente_gusta: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gusta']. Aqui, aceite este presente.",
-        imagem: "imagens/mana_potion.png",
+        imagem: "src/imagens/mana_potion.png",
         acoes: () => {
             inventory.items.push("Poção de mana");
         },
@@ -104,7 +104,7 @@ const cenas = {
 
     presente_my: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da my']. Aqui, aceite este presente.",
-        imagem: "imagens/coin.png",
+        imagem: "src/imagens/coin.png",
         acoes: () => {
             inventory.ouro += 50;
         },
@@ -120,7 +120,7 @@ const cenas = {
 
     presente_thalia: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da thalia']. Aqui, aceite este presente.",
-        imagem: "imagens/bag_coins.png",
+        imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             inventory.ouro += 100;
         },
@@ -136,7 +136,7 @@ const cenas = {
 
     presente_lari: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da lari']. Aqui, aceite este presente.",
-        imagem: "imagens/bag_coins.png",
+        imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             inventory.ouro += 100;
         },
@@ -152,7 +152,7 @@ const cenas = {
 
     presente_wagner: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do wagner']. Aqui, aceite este presente.",
-        imagem: "imagens/potion.png",
+        imagem: "src/imagens/potion.png",
         acoes: () => {
             inventory.items.push("Poção de vida");
         },
@@ -168,7 +168,7 @@ const cenas = {
 
     presente_gui: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gui']. Aqui, aceite este presente.",
-        imagem: "imagens/sword.png",
+        imagem: "src/imagens/sword.png",
         acoes: () => {
             inventory.items.push("Espada Mistica");
         },
@@ -184,7 +184,7 @@ const cenas = {
 
     presente_jaque: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da jaque']. Aqui, aceite este presente.",
-        imagem: "imagens/bag_coins.png",
+        imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             inventory.ouro += 100;
         },
@@ -200,7 +200,7 @@ const cenas = {
 
     encontro_dragao: {
         texto: "Você chega ao centro da floresta e encontra um dragão feroz. Ele está guardando o covil, o dragão ruge e se prepara para atacar!",
-        imagem: "imagens/dragon.png",
+        imagem: "src/imagens/dragon.png",
         opcoes: [
             { texto: "Utilizar botas de agilidade para desviar do ataque", cena: "desviar_dano"},
             { texto: "Tentar acerto com a espada mística", cena: "atacar_dragao"},
@@ -210,7 +210,7 @@ const cenas = {
 
     desviar_dano: {
         texto: "Você consegue desviar do ataque do dragão, mas ele fica furioso e ataca novamente. Você perde 20 de vida.",
-        imagem: "imagens/sofreu_dano.png",
+        imagem: "src/imagens/sofreu_dano.png",
         opcoes: [
             { texto: "Tentar acerto com a espada mística", cena: "atacar_dragao" },
             { texto: "Utilizar ataque mágico", cena: "ataque_magico" },
@@ -219,7 +219,7 @@ const cenas = {
 
     atacar_dragao: {
         texto: "Você tenta acertar o dragão com a espada mística e acerta o golpe! O dragão grita de dor, mas ainda está de pé.",
-        imagem: "imagens/dragon.png",
+        imagem: "src/imagens/dragon.png",
         opcoes: [
             { texto: "Utilizar ataque mágico", cena: "ataque_magico" },
             { texto: "Utilizar poção de vida", cena: "usar_pocao_vida" },
@@ -228,14 +228,14 @@ const cenas = {
 
     usar_pocao_vida: {
         texto: "Você utiliza a poção de vida e recupera 20 de vida.",
-        imagem: "imagens/barra_vida.png",
+        imagem: "src/imagens/barra_vida.png",
         opcoes: [
             { texto: "Utilizar ataque mágico", cena: "ataque_magico" },
         ]
     },
     ataque_magico: {
         texto: "Você utiliza um ataque mágico poderoso e derrota o dragão!",
-        imagem: "imagens/vitoria.png",
+        imagem: "src/imagens/vitoria.png",
         opcoes: [
             { texto: "Saquear tesouro no covil do dragão", cena: "saquear_tesouro" },
         ]
@@ -245,7 +245,7 @@ const cenas = {
         texto: () => { inventory.items.push("Anel de Casamento");
         return `Matheus derrota o monstro! Ele encontra um baú com ${inventory.ouro} moedas de ouro e o Anel de Casamento. Hora de entregá-lo à princesa!`;
     },
-        imagem: "imagens/ring.png",
+        imagem: "src/imagens/ring.png",
         opcoes: [
             { texto: "Encontrar à princesa", cena: "final" }
         ]
@@ -253,7 +253,7 @@ const cenas = {
 
     final: {
         texto: "Você chega ao castelo. A princesa o espera ansiosamente. Matheus, você completou sua missão! Com coragem e coração, atravessou toda a floresta. Agora, entregue o anel e viva seu felizes para sempre!",
-        imagem: "src/princesa.jpg",
+        imagem: "src/imagens/princesa.jpg",
         opcoes: [
             { texto: "Jogar novamente", cena: "inicio" }
         ]
