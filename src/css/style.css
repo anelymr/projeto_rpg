@@ -1,0 +1,87 @@
+body{
+    background-color: #1f1f1f;
+    color: #069e34;
+    font-family: "VT323", monospace;
+    font-size: 16px;
+    letter-spacing: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 5px;
+}
+
+#message-container {
+  margin: 20px 0;
+  padding: 10px;
+  color: #0f0;
+  text-align: center;
+}
+
+#inventory {
+  color: #0f0;
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+#game-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: #2c2c2c;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  text-align: center;
+}
+
+#scene-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #222;
+  border: 2px solid rgba(0, 255, 76, 0.863);
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  color: rgba(0, 255, 76, 0.863);
+  padding: 10px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 90%;
+  max-width: 400px;
+}
+
+button:hover {
+  background-color: rgba(0, 255, 76, 0.863);
+  color: #000;
+  border-color: #000;
+}
+
+/*
+button {
+  background-color: #9b9b9b7a;
+  font-family: "Press Start 2P", monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: rgba(52, 247, 111, 0.993);
+  padding: 12px 20px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  background-color: #45a049;
+  color: rgba(255, 255, 255, 0.993);
+}
+*/
