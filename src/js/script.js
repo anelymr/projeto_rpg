@@ -4,8 +4,7 @@ const startButton = document.getElementById("start-button");
 const sceneImage = document.getElementById("scene-image");
 
 let inventory = {
-    ouro: 0,
-    items: []
+    ouro: 0
 };
 
 startButton.addEventListener("click", () => {
@@ -226,8 +225,8 @@ const cenas = {
     },
 
     saquear_tesouro: {
-        texto: () => { inventory.items.push("Anel de Casamento");
-        return `Matheus derrota o monstro! Ele encontra um baú com ${inventory.ouro} moedas de ouro e o Anel de Casamento. Hora de entregá-lo à princesa!`;
+    texto: () => {
+        return `Matheus derrota o monstro! Ele encontra um baú com ${inventory.ouro} moedas de ouro. Hora de entregá-lo à princesa!`;
     },
         imagem: "src/imagens/ring.png",
         opcoes: [
@@ -251,6 +250,8 @@ function mostrarCena(id) {
     message.innerText = typeof cena.texto === "function" ? cena.texto() : cena.texto;
     sceneImage.src = cena.imagem;
     optionsContainer.innerHTML = "";
+
+    atualizarInventario();
 
     cena.opcoes.forEach(opcao => {
         const button = document.createElement("button");
