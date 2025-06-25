@@ -239,7 +239,7 @@ const cenas = {
 
     final: {
         texto: "Você chega ao castelo. A princesa o espera ansiosamente. Matheus, você completou sua missão! Com coragem e coração, atravessou toda a floresta. Agora, entregue o anel e viva seu felizes para sempre!",
-        imagem: "src/imagens/princesa.jpg",
+        imagem: "src/imagens/princesa.png",
         opcoes: [
             { texto: "Jogar novamente", cena: "inicio" }
         ]
