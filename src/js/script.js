@@ -245,14 +245,25 @@ const cenas = {
 };
 
 function mostrarCena(id) {
+    console.log("Mostrando cena:", id);
     const cena = cenas[id];
-    if(cena.acoes) cena.acoes();
+    if (!cena) {
+        console.error("Cena não encontrada:", id);
+        return;
+    }
+    if (cena.acoes) cena.acoes();
 
     message.innerText = typeof cena.texto === "function" ? cena.texto() : cena.texto;
     sceneImage.src = cena.imagem;
     optionsContainer.innerHTML = "";
 
+    if (!cena.opcoes || cena.opcoes.length === 0) {
+        console.log("Sem opções para mostrar.");
+        return;
+    }
+
     cena.opcoes.forEach(opcao => {
+        console.log("Criando botão para opção:", opcao.texto);
         const button = document.createElement("button");
         button.innerText = opcao.texto;
         button.onclick = () => mostrarCena(opcao.cena);
