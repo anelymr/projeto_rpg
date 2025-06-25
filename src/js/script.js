@@ -24,7 +24,7 @@ function atualizarInventario() {
 const cenas = {
     inicio: {
         texto: "Após incontáveis dias lutando contra os bugs da entrada de Unioland, o nobre cavaleiro Matheus recebeu a sua tão desejada missão: entregar o anel da rainha para a princesa e tomá-la em casamento. Para isso, ele terá que enfrentar a floresta densa do seu reino: a DataFlorest. O guarda se aproxima do cavaleiro Matheus e fala: 'OH nobre cavaleiro, há três caminhos à frente que o levarão para diversos acampamentos onde fornecerão suprimentos para sua nova missão. Escolha um caminho para seguir:",
-        imagem: "imagens/forest.png",
+        imagem: "src/imagens/forest.png",
         opcoes: [
             { texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
             { texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
