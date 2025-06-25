@@ -97,6 +97,9 @@ const cenas = {
     presente_my: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da my']. Aqui, aceite este presente.",
         imagem: "src/imagens/coin.png",
+        acoes: () => {
+            inventory.ouro += 50;
+        },
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
             { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
