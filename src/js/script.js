@@ -7,6 +7,8 @@ let inventory = {
     ouro: 0
 };
 
+let cenasVisitadas = {};
+
 startButton.addEventListener("click", () => {
     startButton.style.display = "none";
     startGame();
@@ -27,7 +29,7 @@ const cenas = {
         opcoes: [
             { texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
             { texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-            { texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
         ]
     },
 
@@ -43,8 +45,11 @@ const cenas = {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do cadastro']. Aqui, aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
-            inventory.ouro += 100;
-         },
+            if (!cenasVisitadas["presente_cadastro"]) {
+                inventory.ouro += 100;
+                cenasVisitadas["presente_cadastro"] = true;
+            }
+        },
          opcoes: [
             { texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
             { texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
@@ -84,104 +89,188 @@ const cenas = {
     presente_gusta: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gusta']. Aqui, aceite este presente.",
         imagem: "src/imagens/mana_potion.png",
-        opcoes: [
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        acoes: () => {
+            if (!cenasVisitadas["presente_gusta"]) {
+                cenasVisitadas["presente_gusta"] = true;
+            }
+        },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            // Verifica se todas as cenas de TI foram visitadas para mostrar a opção do dragão
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_my: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da my']. Aqui, aceite este presente.",
         imagem: "src/imagens/coin.png",
         acoes: () => {
-            inventory.ouro += 50;
+            if (!cenasVisitadas["presente_my"]) {
+                inventory.ouro += 50;
+                cenasVisitadas["presente_my"] = true;
+            }
         },
-        opcoes: [
-            { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_thalia: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da thalia']. Aqui, aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
-            inventory.ouro += 100;
+            if (!cenasVisitadas["presente_thalia"]) {
+                inventory.ouro += 100;
+                cenasVisitadas["presente_thalia"] = true;
+            }
         },
-        opcoes: [
-           { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_lari: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da lari']. Aqui, aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
-            inventory.ouro += 100;
+            if (!cenasVisitadas["presente_lari"]) {
+                inventory.ouro += 100;
+                cenasVisitadas["presente_lari"] = true;
+            }
         },
-        opcoes: [
-            { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_wagner: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do wagner']. Aqui, aceite este presente.",
         imagem: "src/imagens/potion.png",
-        opcoes: [
-            { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        acoes: () => {
+            if (!cenasVisitadas["presente_wagner"]) {
+                cenasVisitadas["presente_wagner"] = true;
+            }
+        },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_gui: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem do gui']. Aqui, aceite este presente.",
         imagem: "src/imagens/sword.png",
-        opcoes: [
-            { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-        ]
+        acoes: () => {
+            if (!cenasVisitadas["presente_gui"]) {
+                cenasVisitadas["presente_gui"] = true;
+            }
+        },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
+            ];
+            
+            if (todasCenasTiVisitadas()) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            }
+            
+            return opcoes;
+        }
     },
 
     presente_jaque: {
         texto: "Oh nobre cavaleiro, ['Digitar mensagem da jaque']. Aqui, aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
-            inventory.ouro += 100;
+            if (!cenasVisitadas["presente_jaque"]) {
+                inventory.ouro += 100;
+                cenasVisitadas["presente_jaque"] = true;
+            }
         },
-        opcoes: [
-            { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-            { texto: "Falar com o mago do python", cena: "presente_wagner"},
-            { texto: "Seguir para o centro da floresta", cena: "encontro_dragao" },
-        ]
+        opcoes: () => {
+            if (todasCenasTiVisitadas()) {
+                return [
+                    { texto: "Seguir para o centro da floresta", cena: "encontro_dragao" }
+                ];
+            } else {
+                return [
+                    { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
+                    { texto: "Falar com a maga dos testes", cena: "presente_my"},
+                    { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+                    { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+                    { texto: "Falar com o mago do python", cena: "presente_wagner"},
+                    { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
+                ];
+            }
+        }
     },
 
     encontro_dragao: {
@@ -220,32 +309,64 @@ const cenas = {
         ]
     },
     ataque_magico: {
-        texto: "Você utiliza um ataque mágico poderoso e derrota o dragão!",
+        texto: "Você utiliza um ataque mágico poderoso e derrota o dragão! Enquanto o dragão cai você visualiza um brilho dentro do covil. O que você deseja fazer?",
         imagem: "src/imagens/vitoria.png",
         opcoes: [
-            { texto: "Saquear tesouro no covil do dragão", cena: "saquear_tesouro" },
+            { texto: "Olhar o dragão derrotado", cena: "encontra_anel" },
+            { texto: "Se aproximar do covil", cena: "saquear_tesouro" },
+        ]
+    },
+
+    ataque_magico: {
+        texto: "Você tenta se aproximar do covil, mas você tem uma sensação de que é necessário investigar o dragão derrotado primeiro.",
+        imagem: "src/imagens/pensamento.png",
+        opcoes: [
+            { texto: "Olhar o dragão derrotado", cena: "encontra_anel" },
+        ]
+    },
+
+    encontra_anel: {
+        texto: "Você se aproxima do dragão derrotado e encontra um anel mágico em seu pescoço. Você o pega, é o anel da princesa!",
+        imagem: "src/imagens/ring.png",
+        opcoes: [
+            { texto: "Entrar no covil", cena: "saquear_tesouro" },
         ]
     },
 
     saquear_tesouro: {
     texto: () => {
-        return `Matheus derrota o monstro! Ele encontra um baú com ${inventory.ouro} moedas de ouro. Hora de entregá-lo à princesa!`;
+        return `Você entra no covil e quando menos espera encontra um baú com ${inventory.ouro} moedas de ouro. Você coleta essas moedas e guarda em sua mochila.`;
     },
-        imagem: "src/imagens/ring.png",
+        imagem: "src/imagens/bau.png",
         opcoes: [
             { texto: "Encontrar à princesa", cena: "final" }
         ]
     },
 
     final: {
-        texto: "Você chega ao castelo. A princesa o espera ansiosamente. Matheus, você completou sua missão! Com coragem e coração, atravessou toda a floresta. Agora, entregue o anel e viva seu felizes para sempre!",
+        texto: "Você chega ao castelo. A princesa o espera ansiosamente. Matheus, você completou sua missão! Com coragem e coração, atravessou toda a floresta. Agora vá, entregue o anel e viva seu felizes para sempre!",
         imagem: "src/imagens/princesa.png",
   }
 };
 
+// Função auxiliar para verificar se todas as cenas de TI foram visitadas
+function todasCenasTiVisitadas() {
+    return cenasVisitadas["presente_gusta"] &&
+           cenasVisitadas["presente_my"] &&
+           cenasVisitadas["presente_thalia"] &&
+           cenasVisitadas["presente_lari"] &&
+           cenasVisitadas["presente_wagner"] &&
+           cenasVisitadas["presente_gui"] &&
+           cenasVisitadas["presente_jaque"];
+}
+
 function mostrarCena(id) {
     const cena = cenas[id];
-    if(cena.acoes) cena.acoes();
+    
+    // Verifica se é a primeira vez que visita a cena antes de executar ações
+    if (cena.acoes) {
+        cena.acoes();
+    }
 
     message.innerText = typeof cena.texto === "function" ? cena.texto() : cena.texto;
     sceneImage.src = cena.imagem;
@@ -253,10 +374,15 @@ function mostrarCena(id) {
 
     atualizarInventario();
 
-    cena.opcoes.forEach(opcao => {
-        const button = document.createElement("button");
-        button.innerText = opcao.texto;
-        button.onclick = () => mostrarCena(opcao.cena);
-        optionsContainer.appendChild(button);
-    });
+    // Só mostra opções se existirem (para a cena final)
+    if (cena.opcoes) {
+        const opcoes = typeof cena.opcoes === "function" ? cena.opcoes() : cena.opcoes;
+        
+        opcoes.forEach(opcao => {
+            const button = document.createElement("button");
+            button.innerText = opcao.texto;
+            button.onclick = () => mostrarCena(opcao.cena);
+            optionsContainer.appendChild(button);
+        });
+    }
 }
