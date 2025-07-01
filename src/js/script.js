@@ -24,25 +24,42 @@ function atualizarInventario() {
 
 const cenas = {
     inicio: {
-        texto: "Após incontáveis dias lutando contra os bugs da entrada de Unioland, o nobre cavaleiro Matheus recebeu a sua tão desejada missão: entregar o anel da rainha para a princesa e tomá-la em casamento. Para isso, ele terá que enfrentar a floresta densa do seu reino: a DataFlorest. O guarda se aproxima do cavaleiro Matheus e fala: 'OH nobre cavaleiro, há três caminhos à frente que o levarão para diversos acampamentos onde fornecerão suprimentos para sua nova missão. Escolha um caminho para seguir:",
+        texto: "Após incontáveis dias lutando contra os bugs da entrada de Unioland, o nobre cavaleiro Matheus precisa completar uma missão importante: entregar o anel da rainha para a princesa e tomá-la em casamento. Para isso, ele terá que enfrentar a floresta densa do seu reino: a DataFlorest.",
         imagem: "src/imagens/forest.png",
         opcoes: [
-            { texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
-            { texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
+            { texto: "Sair pelo portão do reino de Unioland", cena: "portao_reino" }
+            //{ texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
+            //{ texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
             //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
         ]
     },
 
+    portao_reino: {
+        texto: "Você se aproxima da saída do castelo de Unioland e encontra o guarda real, ele parece querer falar com você.",
+        imagem: "src/imagens/castelo.png",
+        opcoes: [
+            { texto: "Falar com o guarda real", cena: "guarda_real" }
+        ]
+    },
+
+    guarda_real:{
+        texto: "OH nobre cavaleiro, há vários caminhos à frente que o levarão para diversos acampamentos onde fornecerão suprimentos para sua nova missão. Siga em frente e não os perca de vista. Boa sorte!",
+        imagem: "src/imagens/cavaleiro_real.png",
+        opcoes: [
+            { texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
+        ]
+    },
+    
     cadastro: {
         texto: "Você encontra duas guardiãs. Você se aproxima para falar com elas.",
         imagem: "src/imagens/guardias_cadastro.png",
         opcoes: [
-            { texto: "Falar com as guardiãs", cena: "presente_cadastro"}
+            { texto: "Ouvir mensagem das guardiãs", cena: "presente_cadastro"}
         ]
     },
 
     presente_cadastro: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem do cadastro']. Aqui, aceite este presente.",
+        texto: "Oh nobre cavaleiro, parabéns por ganhar o coração da princesa! Desejamos muitas felicidades, companheirismo, união e amor para vocês dois. Que Deus seja sempre o alicerce do relacionamento de vocês. Aqui, aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             if (!cenasVisitadas["presente_cadastro"]) {
@@ -51,13 +68,37 @@ const cenas = {
             }
         },
          opcoes: [
-            { texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-            { texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+            { texto: "Sair do acampamento dos registros reais", cena: "encontra_monica" },
+         ]
+    },
+
+    encontra_monica: {
+        texto: "Ao sair do acampamento dos registros reais, você entra na floresta e escuta um barulho. Você olha ao redor e encontra uma criatura mágica, ela parece querer falar com você.",
+        imagem: "src/imagens/criatura_magica.png",
+         opcoes: [
+            { texto: "Falar com a criatura mágica", cena: "criatura_magica" }
+            //{ texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
+            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+         ]
+    },
+
+    criatura_magica: {
+        texto: "Oh você é o nobre cavaleiro, conhecido como o Mano Matt, que felicidade esse momento! Que a vida com sua princesa seja imensa de muita união, de prosperidade, de diálogo, risadas e muita cumplicidade! Que Deus abençõe grandemente a jornada de vocês e que sejam imensamente felizes! Aqui, aceite este presente",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["criatura_magica"]) {
+                inventory.ouro += 20;
+                cenasVisitadas["criatura_magica"] = true;
+            }
+        },
+         opcoes: [
+            { texto: "Avançar para o acampamento dos comerciantes de Unioland", cena: "comercial"},
+            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
     },
 
     comercial: {
-        texto: "Você encontra um grupo de comerciantes. Você se aproxima para falar com eles.",
+        texto: "Após caminhar pela floresta, encontra um grupo de comerciantes. Você se aproxima para falar com eles.",
         imagem: "src/imagens/comerciantes.png",
         opcoes: [
             { texto: "Falar com os comerciantes", cena: "presente_comercial"}
@@ -65,11 +106,29 @@ const cenas = {
     },
 
     presente_comercial: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem do comercial']. Aqui, aceite este presente.",
+        texto: "O comerciante Marcus se aproxima e diz: 'Nobre cavaleiro Math, desejo muito amor, companheirismo e uma vida cheia de momentos felizes para vocês. Aproveitem cada segundo dessa caminhada!' em seguida a líder dos comerciantes se aproxima e diz: 'Nobre cavaleiro, que alegria ver você dando esse passo tão importante (e corajoso, rs)! Que nunca faltem amor, risadas, viagens inesperadas, DRs resolvidas com pizza e planos malucos a dois. Casar é dividir a vida — inclusive o controle remoto, o edredom e as séries favoritas. Que seja uma jornada incrível, cheia de parceria, leveza e muitos momentos inesquecíveis. Aqui aceite este presente'",
         imagem: "src/imagens/boots.png",
         opcoes: [
-            { texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+            { texto: "Avançar pelo caminho escuro da Dataflorest", cena: "encontra_fantasma" }
+            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
+    },
+
+    encontra_fantasma: {
+        texto: "Você avança pelo caminho escuro da Dataflorest e encontra um fantasma. Ele parece querer falar com você.",
+        imagem: "src/imagens/ghost.png",
+        opcoes: [
+            { texto: "Falar com os fantasmas", cena: "presente_fantasmas" }
+            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+         ]
+    },
+
+    presente_fantasmas: {
+        texto: "Oh nobre cavaleiro, você está entrando em um caminho obscuro, mas não se preocupe tenho algo que irá te ajudar, mas antes quero que você saiba 'Ouvi sobre sua união com a princsesa e desejo muita felicidade e amor para vocês dois.' Aqui, aceite este presente.'",
+        imagem: "src/imagens/armadura.png",
+        opcoes: [
+            { texto: "Avançar para o acampamento dos magos digitais", cena: "ti" }
+        ]
     },
 
     ti: {
