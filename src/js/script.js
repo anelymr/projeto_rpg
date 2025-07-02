@@ -8,6 +8,10 @@ let inventory = {
 };
 
 let cenasVisitadas = {};
+let todasCenasComercialVisitadas = false;
+let todasCenasInfraVisitadas = false;
+let todasCenasTiMeninosVisitadas = false;
+let todasCenasTiMeninasVisitadas = false;
 
 startButton.addEventListener("click", () => {
     startButton.style.display = "none";
@@ -28,9 +32,6 @@ const cenas = {
         imagem: "src/imagens/forest.png",
         opcoes: [
             { texto: "Sair pelo portão do reino de Unioland", cena: "portao_reino" }
-            //{ texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
-            //{ texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
         ]
     },
 
@@ -77,8 +78,6 @@ const cenas = {
         imagem: "src/imagens/criatura_magica.png",
          opcoes: [
             { texto: "Falar com a criatura mágica", cena: "criatura_magica" }
-            //{ texto: "Ir para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
     },
 
@@ -93,7 +92,6 @@ const cenas = {
         },
          opcoes: [
             { texto: "Avançar para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
     },
 
@@ -101,16 +99,74 @@ const cenas = {
         texto: "Após caminhar pela floresta, encontra um grupo de comerciantes. Você se aproxima para falar com eles.",
         imagem: "src/imagens/comerciantes.png",
         opcoes: [
-            { texto: "Falar com os comerciantes", cena: "presente_comercial"}
+            { texto: "Falar com a líder dos comerciantes", cena: "comercial_josana"},
+            { texto: "Falar com o comerciante Marcus", cena: "comercial_marcus"}
         ]
     },
 
+    comercial_josana: {
+        texto: "A líder dos comerciantes se aproxima de você e se emociona ao dizer: Que alegria ver você dando esse passo tão importante! Que nunca falte amor, risadas, viagens inesperadas, DRs resolvidas com pizza e planos malucos a dois. Casar é dividir a vida — inclusive o controle remoto, o edredom e as séries favoritas. Que seja uma jornada incrível, cheia de parceria, leveza e muitos momentos inesquecíveis. Felicidades mil!",
+        imagem: "src/imagens/comerciantes.png",
+        acoes: () => {
+        if (!cenasVisitadas["comercial_josana"]) {
+            cenasVisitadas["comercial_josana"] = true;
+            
+            if (cenasVisitadas["comercial_marcus"]) {
+                todasCenasComercialVisitadas = true;
+            }
+        }
+    },
+    opcoes: () => {
+        const opcoes = [];
+        
+        if (!cenasVisitadas["comercial_marcus"]) {
+            opcoes.push({ texto: "Falar com o comerciante Marcus", cena: "comercial_marcus" });
+        }
+        
+        if (todasCenasComercialVisitadas) {
+            opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
+        } else if (opcoes.length === 0) {
+            opcoes.push({ texto: "Continuar explorando", cena: "comercial" });
+        }
+        
+        return opcoes;
+    }
+},
+
+    comercial_marcus: {
+        texto: "Nobre cavaleiro Math, desejo muito amor, companheirismo e uma vida cheia de momentos felizes para vocês. Aproveitem cada segundo dessa caminhada!'",
+        imagem: "src/imagens/comerciantes.png",
+        acoes: () => {
+        if (!cenasVisitadas["comercial_marcus"]) {
+            cenasVisitadas["comercial_marcus"] = true;
+            
+            if (cenasVisitadas["comercial_josana"]) {
+                todasCenasComercialVisitadas = true;
+            }
+        }
+    },
+    opcoes: () => {
+        const opcoes = [];
+        
+        if (!cenasVisitadas["comercial_josana"]) {
+            opcoes.push({ texto: "Falar com a líder dos comerciantes", cena: "comercial_josana" });
+        }
+        
+        if (todasCenasComercialVisitadas) {
+            opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
+        } else if (opcoes.length === 0) {
+            opcoes.push({ texto: "Continuar explorando", cena: "comercial" });
+        }
+        
+        return opcoes;
+    }
+},
+
     presente_comercial: {
-        texto: "O comerciante Marcus se aproxima e diz: 'Nobre cavaleiro Math, desejo muito amor, companheirismo e uma vida cheia de momentos felizes para vocês. Aproveitem cada segundo dessa caminhada!' em seguida a líder dos comerciantes se aproxima e diz: 'Nobre cavaleiro, que alegria ver você dando esse passo tão importante (e corajoso, rs)! Que nunca faltem amor, risadas, viagens inesperadas, DRs resolvidas com pizza e planos malucos a dois. Casar é dividir a vida — inclusive o controle remoto, o edredom e as séries favoritas. Que seja uma jornada incrível, cheia de parceria, leveza e muitos momentos inesquecíveis. Aqui aceite este presente'",
+        texto: "Você recebeu botas ágeis",
         imagem: "src/imagens/boots.png",
         opcoes: [
             { texto: "Avançar pelo caminho escuro da Dataflorest", cena: "encontra_fantasma" }
-            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
          ]
     },
 
@@ -118,135 +174,156 @@ const cenas = {
         texto: "Você avança pelo caminho escuro da Dataflorest e encontra um fantasma. Ele parece querer falar com você.",
         imagem: "src/imagens/ghost.png",
         opcoes: [
-            { texto: "Falar com os fantasmas", cena: "presente_fantasmas" }
-            //{ texto: "Ir para o acampamento dos magos digitais", cena: "ti"},
+            { texto: "Falar com os fantasmas", cena: "falar_fantasmas" }
          ]
     },
 
-    presente_fantasmas: {
+    falar_fantasmas: {
         texto: "Oh nobre cavaleiro, você está entrando em um caminho obscuro, mas não se preocupe tenho algo que irá te ajudar, mas antes quero que você saiba 'Ouvi sobre sua união com a princsesa e desejo muita felicidade e amor para vocês dois.' Aqui, aceite este presente.'",
-        imagem: "src/imagens/armadura.png",
+        imagem: "src/imagens/ghost.png",
         opcoes: [
-            { texto: "Avançar para o acampamento dos magos digitais", cena: "ti" }
+            { texto: "Receber armadura", cena: "presente_fantasmas" }
         ]
     },
 
-    ti: {
+    presente_fantasmas: {
+        texto: "Você recebeu uma armadura mágica que irá te proteger dos perigos da Dataflorest.",
+        imagem: "src/imagens/armadura.png",
+        opcoes: [
+            { texto: "Avançar para o acampamento dos magos digitais", cena: "infra" }
+        ]
+    },
+
+    infra: {
+        texto: "Você avista o acampamento dos magos digitais, você se sente em casa e começa a explocar a primeira tenda. Você encontra um grupo de magos rodeados de máquinas tecnologicas.",
+        imagem: "src/imagens/infra.png",
+        opcoes: [
+            { texto: "Falar com o líder dos magos de infraestrutura", cena: "infra_luciano" },
+            { texto: "Falar com o mago da barba", cena: "infra_wigori" },
+            { texto: "Falar com o mago vegano", cena: "infra_diego"},
+            { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
+        ]
+    },
+
+    infra_luciano: {
+        texto: "Oh nobre cavaleiro, à ti nossos votos de uma união feliz e duradoura, aqui receba este presente.",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["infra_luciano"]) {
+                inventory.ouro += 50;
+                cenasVisitadas["infra_luciano"] = true;
+            }
+    },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago da barba", cena: "infra_wigori" },
+                { texto: "Falar com o mago vegano", cena: "infra_diego"},
+                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
+            ];
+            
+            if (todasCenasInfraVisitadas) {
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos" });
+            }
+            
+            return opcoes;
+        },
+    },
+
+    infra_wigori: {
+        texto: "Caro cavaleiro, parabéns! Desejo um casamento cheio de amor, cumplicidade e felicidade. Que a jornada a dois seja repleta de momentos inesquecíveis e que a união de vocês seja eterna. Aqui, aceite este presente.",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["infra_wigori"]) {
+                inventory.ouro += 50;
+                cenasVisitadas["infra_wigori"] = true;
+            }
+    },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago vegano", cena: "infra_diego"},
+                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
+            ];
+            
+            if (todasCenasInfraVisitadas) {
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos"  });
+            }
+            
+            return opcoes;
+        },
+    },
+
+    infra_diego: {
+        texto: "Caro cavaleiro, aproveite muito cada momento e etapa desse ciclo e que o relacionamento de vcs seja sempre repleto de alegria e sonhos realizados. Você merece, aceite este presente.",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["infra_diego"]) {
+                inventory.ouro += 10;
+                cenasVisitadas["infra_diego"] = true;
+            }
+    },
+        opcoes: () => {
+            const opcoes = [
+                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
+            ];
+            
+            if (todasCenasInfraVisitadas) {
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos"  });
+            }
+            
+            return opcoes;
+        },
+    },
+
+    infra_fernando: {
+        texto: "Caro cavaleiro, aproveite muito cada momento e etapa desse ciclo e que o relacionamento de vcs seja sempre repleto de alegria e sonhos realizados. Você merece, aceite este presente.",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["infra_fernando"]) {
+                inventory.ouro += 30;
+                cenasVisitadas["infra_fernando"] = true;
+            }
+        },
+        opcoes: [
+        { texto: "Explorar próxima tenda", cena: "ti_meninos"  }
+        ],
+    },
+
+    ti_meninos: {
         texto: "Você avista um local com um grupo de magos. Eles estão te esperando. Parece que cada um deseja falar com você.",
-        imagem: "src/imagens/magos3.png",
+        imagem: "src/imagens/magos_homens.png",
         opcoes: [
             { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-            { texto: "Falar com a maga dos testes", cena: "presente_my"},
-            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
             { texto: "Falar com o mago do python", cena: "presente_wagner"},
             { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
         ]
     },
 
     presente_gusta: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem do gusta']. Aqui, aceite este presente.",
+        texto: "Oh nobre cavaleiro, seja bem vindo de volta! Soubemos sobre o noivado...desejo tuudo de bom nessa nova fase, que Deus te acompanhe em cada decisão, em cada batalha e te desejo muuuuitas felicidades nesse novo ciclo! Aceite este presente.",
         imagem: "src/imagens/mana_potion.png",
         acoes: () => {
             if (!cenasVisitadas["presente_gusta"]) {
                 cenasVisitadas["presente_gusta"] = true;
+                if (cenasVisitadas["presente_wagner"] && cenasVisitadas["presente_gui"]) {
+                    todasCenasTiMeninosVisitadas = true;
+                }
             }
         },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
+            const opcoes = [];
             
-            // Verifica se todas as cenas de TI foram visitadas para mostrar a opção do dragão
-            if (todasCenasTiVisitadas()) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            if (!cenasVisitadas["presente_wagner"]) {
+                opcoes.push({ texto: "Falar com o mago do python", cena: "presente_wagner"});
             }
             
-            return opcoes;
-        }
-    },
-
-    presente_my: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem da my']. Aqui, aceite este presente.",
-        imagem: "src/imagens/coin.png",
-        acoes: () => {
-            if (!cenasVisitadas["presente_my"]) {
-                inventory.ouro += 50;
-                cenasVisitadas["presente_my"] = true;
-            }
-        },
-        opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
-            
-            if (todasCenasTiVisitadas()) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            if (!cenasVisitadas["presente_gui"]) {
+                opcoes.push({ texto: "Falar com o mago dos negócios", cena: "presente_gui"});
             }
             
-            return opcoes;
-        }
-    },
-
-    presente_thalia: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem da thalia']. Aqui, aceite este presente.",
-        imagem: "src/imagens/bag_coins.png",
-        acoes: () => {
-            if (!cenasVisitadas["presente_thalia"]) {
-                inventory.ouro += 100;
-                cenasVisitadas["presente_thalia"] = true;
-            }
-        },
-        opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
-            
-            if (todasCenasTiVisitadas()) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
-            }
-            
-            return opcoes;
-        }
-    },
-
-    presente_lari: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem da lari']. Aqui, aceite este presente.",
-        imagem: "src/imagens/bag_coins.png",
-        acoes: () => {
-            if (!cenasVisitadas["presente_lari"]) {
-                inventory.ouro += 100;
-                cenasVisitadas["presente_lari"] = true;
-            }
-        },
-        opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
-            
-            if (todasCenasTiVisitadas()) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            if (todasCenasTiMeninosVisitadas) {
+                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
             }
             
             return opcoes;
@@ -254,25 +331,31 @@ const cenas = {
     },
 
     presente_wagner: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem do wagner']. Aqui, aceite este presente.",
+        texto: "Oh nobre cavaleiro, que esta nova jornada seja repleta de alegrias e conquistas! Que vocês construam uma história linda juntos, cheia de amor e compreensão. Aceite este presente.",
         imagem: "src/imagens/potion.png",
         acoes: () => {
             if (!cenasVisitadas["presente_wagner"]) {
                 cenasVisitadas["presente_wagner"] = true;
+                if (cenasVisitadas["presente_gusta"] && cenasVisitadas["presente_gui"]) {
+                    todasCenasTiMeninosVisitadas = true;
+                }
             }
         },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
+            const opcoes = [];
             
-            if (todasCenasTiVisitadas()) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            if (!cenasVisitadas["presente_gusta"]) {
+                opcoes.push({ texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"});
+            }
+            
+            if (!cenasVisitadas["presente_gui"]) {
+                opcoes.push({ texto: "Falar com o mago dos negócios", cena: "presente_gui"});
+            }
+            
+            if (todasCenasTiMeninosVisitadas) {
+                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
             }
             
             return opcoes;
@@ -280,25 +363,125 @@ const cenas = {
     },
 
     presente_gui: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem do gui']. Aqui, aceite este presente.",
+        texto: "Oh nobre cavaleiro, que esta união seja abençoada e repleta de momentos felizes! Desejo a vocês uma vida de harmonia e realizações. Aceite este presente.",
         imagem: "src/imagens/sword.png",
         acoes: () => {
             if (!cenasVisitadas["presente_gui"]) {
                 cenasVisitadas["presente_gui"] = true;
+                if (cenasVisitadas["presente_gusta"] && cenasVisitadas["presente_wagner"]) {
+                    todasCenasTiMeninosVisitadas = true;
+                }
             }
         },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                { texto: "Falar com a maga da fortuna", cena: "presente_jaque"},
-            ];
+            const opcoes = [];
             
-            if (todasCenasTiVisitadas()) {
+            if (!cenasVisitadas["presente_gusta"]) {
+                opcoes.push({ texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"});
+            }
+            
+            if (!cenasVisitadas["presente_wagner"]) {
+                opcoes.push({ texto: "Falar com o mago do python", cena: "presente_wagner"});
+            }
+            
+            if (todasCenasTiMeninosVisitadas) {
+                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
+            }
+            
+            return opcoes;
+        }
+    },
+
+    ti_meninas: {
+        texto: "Você caminha pelo acampamento e encontra a tenda mais aconchegante do acampamento, nela você encontra as magas da Dataflorest... Elas estão te esperando e parece que cada uma deseja falar com você.",
+        imagem: "src/imagens/magas_ti.png",
+        opcoes: () => {
+            const opcoes = [];
+            
+            if (!cenasVisitadas["presente_my"]) {
+                opcoes.push({ texto: "Falar com a maga dos testes", cena: "presente_my"});
+            }
+            
+            if (!cenasVisitadas["presente_lari"]) {
+                opcoes.push({ texto: "Falar com a maga dos dados", cena: "presente_lari"});
+            }
+            
+            if (!cenasVisitadas["presente_jaque"]) {
+                opcoes.push({ texto: "Falar com a maga da fortuna", cena: "presente_jaque"});
+            }
+            
+            if (todasCenasTiMeninasVisitadas) {
                 opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
+            }
+            
+            return opcoes;
+        }
+    },
+
+    presente_my: {
+        texto: "Oh nobre cavaleiro, passamos todos esses anos juntos e agora você está prestes a tomar a princesa em casamento. Que alegria, Deus ama casamentos! Desejo que a união de vocês seja saudável, cheia de amor, cumplicidade e respeito mútuo... Aqui, aceite este presente.",
+        imagem: "src/imagens/coin.png",
+        acoes: () => {
+            if (!cenasVisitadas["presente_my"]) {
+                inventory.ouro += 50;
+                cenasVisitadas["presente_my"] = true;
+                if (cenasVisitadas["presente_lari"] && cenasVisitadas["presente_jaque"]) {
+                    todasCenasTiMeninasVisitadas = true;
+                }
+            }
+        },
+        opcoes: () => {
+            const opcoes = [];
+            
+            if (!cenasVisitadas["presente_lari"]) {
+                opcoes.push({ texto: "Falar com a maga dos dados", cena: "presente_lari"});
+            }
+            
+            if (!cenasVisitadas["presente_jaque"]) {
+                opcoes.push({ texto: "Falar com a maga da fortuna", cena: "presente_jaque"});
+            }
+            
+            if (todasCenasTiMeninasVisitadas) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
+            }
+            
+            return opcoes;
+        }
+    },
+
+    presente_lari: {
+        texto: "Oh nobre cavaleiro, que seu casamento seja repleto de dados de felicidade! Desejo que cada dia seja um novo registro de amor no banco de dados do seu relacionamento. Aceite este presente.",
+        imagem: "src/imagens/bag_coins.png",
+        acoes: () => {
+            if (!cenasVisitadas["presente_lari"]) {
+                inventory.ouro += 100;
+                cenasVisitadas["presente_lari"] = true;
+                if (cenasVisitadas["presente_my"] && cenasVisitadas["presente_jaque"]) {
+                    todasCenasTiMeninasVisitadas = true;
+                }
+            }
+        },
+        opcoes: () => {
+            const opcoes = [];
+            
+            if (!cenasVisitadas["presente_my"]) {
+                opcoes.push({ texto: "Falar com a maga dos testes", cena: "presente_my"});
+            }
+            
+            if (!cenasVisitadas["presente_jaque"]) {
+                opcoes.push({ texto: "Falar com a maga da fortuna", cena: "presente_jaque"});
+            }
+            
+            if (todasCenasTiMeninasVisitadas) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -306,29 +489,35 @@ const cenas = {
     },
 
     presente_jaque: {
-        texto: "Oh nobre cavaleiro, ['Digitar mensagem da jaque']. Aqui, aceite este presente.",
+        texto: "Oh nobre cavaleiro, leio nas estrelas que seu futuro será repleto de felicidade! Que a sorte sempre esteja ao lado de vocês nesta nova jornada. Aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             if (!cenasVisitadas["presente_jaque"]) {
                 inventory.ouro += 100;
                 cenasVisitadas["presente_jaque"] = true;
+                if (cenasVisitadas["presente_my"] && cenasVisitadas["presente_lari"]) {
+                    todasCenasTiMeninasVisitadas = true;
+                }
             }
         },
         opcoes: () => {
-            if (todasCenasTiVisitadas()) {
-                return [
-                    { texto: "Seguir para o centro da floresta", cena: "encontro_dragao" }
-                ];
-            } else {
-                return [
-                    { texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"},
-                    { texto: "Falar com a maga dos testes", cena: "presente_my"},
-                    { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
-                    { texto: "Falar com a maga dos dados", cena: "presente_lari"},
-                    { texto: "Falar com o mago do python", cena: "presente_wagner"},
-                    { texto: "Falar com o mago dos negócios", cena: "presente_gui"},
-                ];
+            const opcoes = [];
+            
+            if (!cenasVisitadas["presente_my"]) {
+                opcoes.push({ texto: "Falar com a maga dos testes", cena: "presente_my"});
             }
+            
+            if (!cenasVisitadas["presente_lari"]) {
+                opcoes.push({ texto: "Falar com a maga dos dados", cena: "presente_lari"});
+            }
+            
+            if (todasCenasTiMeninasVisitadas) {
+                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
+            } else if (opcoes.length === 0) {
+                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
+            }
+            
+            return opcoes;
         }
     },
 
@@ -367,20 +556,13 @@ const cenas = {
             { texto: "Utilizar ataque mágico", cena: "ataque_magico" },
         ]
     },
+
     ataque_magico: {
         texto: "Você utiliza um ataque mágico poderoso e derrota o dragão! Enquanto o dragão cai você visualiza um brilho dentro do covil. O que você deseja fazer?",
         imagem: "src/imagens/vitoria.png",
         opcoes: [
             { texto: "Olhar o dragão derrotado", cena: "encontra_anel" },
             { texto: "Se aproximar do covil", cena: "saquear_tesouro" },
-        ]
-    },
-
-    ataque_magico: {
-        texto: "Você tenta se aproximar do covil, mas você tem uma sensação de que é necessário investigar o dragão derrotado primeiro.",
-        imagem: "src/imagens/pensamento.png",
-        opcoes: [
-            { texto: "Olhar o dragão derrotado", cena: "encontra_anel" },
         ]
     },
 
@@ -393,9 +575,9 @@ const cenas = {
     },
 
     saquear_tesouro: {
-    texto: () => {
-        return `Você entra no covil e quando menos espera encontra um baú com ${inventory.ouro} moedas de ouro. Você coleta essas moedas e guarda em sua mochila.`;
-    },
+        texto: () => {
+            return `Você entra no covil e quando menos espera encontra um baú com ${inventory.ouro} moedas de ouro. Você coleta essas moedas e guarda em sua mochila.`;
+        },
         imagem: "src/imagens/bau.png",
         opcoes: [
             { texto: "Encontrar à princesa", cena: "final" }
@@ -405,24 +587,12 @@ const cenas = {
     final: {
         texto: "Você chega ao castelo. A princesa o espera ansiosamente. Matheus, você completou sua missão! Com coragem e coração, atravessou toda a floresta. Agora vá, entregue o anel e viva seu felizes para sempre!",
         imagem: "src/imagens/princesa.png",
-  }
+    }
 };
-
-// Função auxiliar para verificar se todas as cenas de TI foram visitadas
-function todasCenasTiVisitadas() {
-    return cenasVisitadas["presente_gusta"] &&
-           cenasVisitadas["presente_my"] &&
-           cenasVisitadas["presente_thalia"] &&
-           cenasVisitadas["presente_lari"] &&
-           cenasVisitadas["presente_wagner"] &&
-           cenasVisitadas["presente_gui"] &&
-           cenasVisitadas["presente_jaque"];
-}
 
 function mostrarCena(id) {
     const cena = cenas[id];
     
-    // Verifica se é a primeira vez que visita a cena antes de executar ações
     if (cena.acoes) {
         cena.acoes();
     }
@@ -433,7 +603,6 @@ function mostrarCena(id) {
 
     atualizarInventario();
 
-    // Só mostra opções se existirem (para a cena final)
     if (cena.opcoes) {
         const opcoes = typeof cena.opcoes === "function" ? cena.opcoes() : cena.opcoes;
         
