@@ -23,7 +23,7 @@ function startGame() {
 }
 
 function atualizarInventario() {
-  document.getElementById("ouro").textContent = inventory.ouro;
+    document.getElementById("ouro").textContent = inventory.ouro;
 }
 
 const cenas = {
@@ -43,11 +43,11 @@ const cenas = {
         ]
     },
 
-    guarda_real:{
+    guarda_real: {
         texto: "OH nobre cavaleiro, há vários caminhos à frente que o levarão para diversos acampamentos onde fornecerão suprimentos para sua nova missão. Siga em frente e não os perca de vista. Boa sorte!",
         imagem: "src/imagens/cavaleiro_real.png",
         opcoes: [
-            { texto: "Ir para o acampamento dos registros reais", cena: "cadastro"},
+            { texto: "Ir para o acampamento dos registros reais", cena: "cadastro" },
         ]
     },
     
@@ -55,7 +55,7 @@ const cenas = {
         texto: "Você encontra duas guardiãs. Você se aproxima para falar com elas.",
         imagem: "src/imagens/guardias_cadastro.png",
         opcoes: [
-            { texto: "Ouvir mensagem das guardiãs", cena: "presente_cadastro"}
+            { texto: "Ouvir mensagem das guardiãs", cena: "presente_cadastro" }
         ]
     },
 
@@ -66,19 +66,20 @@ const cenas = {
             if (!cenasVisitadas["presente_cadastro"]) {
                 inventory.ouro += 100;
                 cenasVisitadas["presente_cadastro"] = true;
+                atualizarInventario();
             }
         },
-         opcoes: [
+        opcoes: [
             { texto: "Sair do acampamento dos registros reais", cena: "encontra_monica" },
-         ]
+        ]
     },
 
     encontra_monica: {
         texto: "Ao sair do acampamento dos registros reais, você entra na floresta e escuta um barulho. Você olha ao redor e encontra uma criatura mágica, ela parece querer falar com você.",
         imagem: "src/imagens/criatura_magica.png",
-         opcoes: [
+        opcoes: [
             { texto: "Falar com a criatura mágica", cena: "criatura_magica" }
-         ]
+        ]
     },
 
     criatura_magica: {
@@ -88,19 +89,20 @@ const cenas = {
             if (!cenasVisitadas["criatura_magica"]) {
                 inventory.ouro += 20;
                 cenasVisitadas["criatura_magica"] = true;
+                atualizarInventario();
             }
         },
-         opcoes: [
-            { texto: "Avançar para o acampamento dos comerciantes de Unioland", cena: "comercial"},
-         ]
+        opcoes: [
+            { texto: "Avançar para o acampamento dos comerciantes de Unioland", cena: "comercial" },
+        ]
     },
 
     comercial: {
         texto: "Após caminhar pela floresta, encontra um grupo de comerciantes. Você se aproxima para falar com eles.",
         imagem: "src/imagens/comerciantes.png",
         opcoes: [
-            { texto: "Falar com a líder dos comerciantes", cena: "comercial_josana"},
-            { texto: "Falar com o comerciante Marcus", cena: "comercial_marcus"}
+            { texto: "Falar com a líder dos comerciantes", cena: "comercial_josana" },
+            { texto: "Falar com o comerciante Marcus", cena: "comercial_marcus" }
         ]
     },
 
@@ -108,66 +110,62 @@ const cenas = {
         texto: "A líder dos comerciantes se aproxima de você e se emociona ao dizer: Que alegria ver você dando esse passo tão importante! Que nunca falte amor, risadas, viagens inesperadas, DRs resolvidas com pizza e planos malucos a dois. Casar é dividir a vida — inclusive o controle remoto, o edredom e as séries favoritas. Que seja uma jornada incrível, cheia de parceria, leveza e muitos momentos inesquecíveis. Felicidades mil!",
         imagem: "src/imagens/comerciantes.png",
         acoes: () => {
-        if (!cenasVisitadas["comercial_josana"]) {
-            cenasVisitadas["comercial_josana"] = true;
-            
-            if (cenasVisitadas["comercial_marcus"]) {
-                todasCenasComercialVisitadas = true;
+            if (!cenasVisitadas["comercial_josana"]) {
+                cenasVisitadas["comercial_josana"] = true;
+                
+                if (cenasVisitadas["comercial_marcus"]) {
+                    todasCenasComercialVisitadas = true;
+                }
             }
+        },
+        opcoes: () => {
+            const opcoes = [];
+            
+            if (!cenasVisitadas["comercial_marcus"]) {
+                opcoes.push({ texto: "Falar com o comerciante Marcus", cena: "comercial_marcus" });
+            }
+            
+            if (todasCenasComercialVisitadas) {
+                opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
+            }
+            
+            return opcoes;
         }
     },
-    opcoes: () => {
-        const opcoes = [];
-        
-        if (!cenasVisitadas["comercial_marcus"]) {
-            opcoes.push({ texto: "Falar com o comerciante Marcus", cena: "comercial_marcus" });
-        }
-        
-        if (todasCenasComercialVisitadas) {
-            opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
-        } else if (opcoes.length === 0) {
-            opcoes.push({ texto: "Continuar explorando", cena: "comercial" });
-        }
-        
-        return opcoes;
-    }
-},
 
     comercial_marcus: {
         texto: "Nobre cavaleiro Math, desejo muito amor, companheirismo e uma vida cheia de momentos felizes para vocês. Aproveitem cada segundo dessa caminhada!'",
         imagem: "src/imagens/comerciantes.png",
         acoes: () => {
-        if (!cenasVisitadas["comercial_marcus"]) {
-            cenasVisitadas["comercial_marcus"] = true;
-            
-            if (cenasVisitadas["comercial_josana"]) {
-                todasCenasComercialVisitadas = true;
+            if (!cenasVisitadas["comercial_marcus"]) {
+                cenasVisitadas["comercial_marcus"] = true;
+                
+                if (cenasVisitadas["comercial_josana"]) {
+                    todasCenasComercialVisitadas = true;
+                }
             }
+        },
+        opcoes: () => {
+            const opcoes = [];
+            
+            if (!cenasVisitadas["comercial_josana"]) {
+                opcoes.push({ texto: "Falar com a líder dos comerciantes", cena: "comercial_josana" });
+            }
+            
+            if (todasCenasComercialVisitadas) {
+                opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
+            }
+            
+            return opcoes;
         }
     },
-    opcoes: () => {
-        const opcoes = [];
-        
-        if (!cenasVisitadas["comercial_josana"]) {
-            opcoes.push({ texto: "Falar com a líder dos comerciantes", cena: "comercial_josana" });
-        }
-        
-        if (todasCenasComercialVisitadas) {
-            opcoes.push({ texto: "Aceitar presente", cena: "presente_comercial" });
-        } else if (opcoes.length === 0) {
-            opcoes.push({ texto: "Continuar explorando", cena: "comercial" });
-        }
-        
-        return opcoes;
-    }
-},
 
     presente_comercial: {
         texto: "Você recebeu botas ágeis",
         imagem: "src/imagens/boots.png",
         opcoes: [
             { texto: "Avançar pelo caminho escuro da Dataflorest", cena: "encontra_fantasma" }
-         ]
+        ]
     },
 
     encontra_fantasma: {
@@ -175,11 +173,11 @@ const cenas = {
         imagem: "src/imagens/ghost.png",
         opcoes: [
             { texto: "Falar com os fantasmas", cena: "falar_fantasmas" }
-         ]
+        ]
     },
 
     falar_fantasmas: {
-        texto: "Oh nobre cavaleiro, você está entrando em um caminho obscuro, mas não se preocupe tenho algo que irá te ajudar, mas antes quero que você saiba 'Ouvi sobre sua união com a princsesa e desejo muita felicidade e amor para vocês dois.' Aqui, aceite este presente.'",
+        texto: "Oh nobre cavaleiro, você está entrando em um caminho obscuro, mas não se preocupe tenho algo que irá te ajudar, mas antes quero que você saiba: Ouvi sobre sua união com a princesa e desejo muita felicidade e amor para vocês dois. Aqui, aceite este presente.",
         imagem: "src/imagens/ghost.png",
         opcoes: [
             { texto: "Receber armadura", cena: "presente_fantasmas" }
@@ -212,21 +210,34 @@ const cenas = {
             if (!cenasVisitadas["infra_luciano"]) {
                 inventory.ouro += 50;
                 cenasVisitadas["infra_luciano"] = true;
+                atualizarInventario();
+                
+                if (cenasVisitadas["infra_wigori"] && cenasVisitadas["infra_diego"] && cenasVisitadas["infra_fernando"]) {
+                    todasCenasInfraVisitadas = true;
+                }
             }
-    },
+        },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago da barba", cena: "infra_wigori" },
-                { texto: "Falar com o mago vegano", cena: "infra_diego"},
-                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
-            ];
+            const opcoes = [];
+            
+            if (!cenasVisitadas["infra_wigori"]) {
+                opcoes.push({ texto: "Falar com o mago da barba", cena: "infra_wigori" });
+            }
+            
+            if (!cenasVisitadas["infra_diego"]) {
+                opcoes.push({ texto: "Falar com o mago vegano", cena: "infra_diego"});
+            }
+            
+            if (!cenasVisitadas["infra_fernando"]) {
+                opcoes.push({ texto: "Falar com o mago da nova geração", cena: "infra_fernando"});
+            }
             
             if (todasCenasInfraVisitadas) {
                 opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos" });
             }
             
             return opcoes;
-        },
+        }
     },
 
     infra_wigori: {
@@ -236,20 +247,30 @@ const cenas = {
             if (!cenasVisitadas["infra_wigori"]) {
                 inventory.ouro += 50;
                 cenasVisitadas["infra_wigori"] = true;
+                atualizarInventario();
+                
+                if (cenasVisitadas["infra_luciano"] && cenasVisitadas["infra_diego"] && cenasVisitadas["infra_fernando"]) {
+                    todasCenasInfraVisitadas = true;
+                }
             }
-    },
+        },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago vegano", cena: "infra_diego"},
-                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
-            ];
+            const opcoes = [];
+            
+            if (!cenasVisitadas["infra_diego"]) {
+                opcoes.push({ texto: "Falar com o mago vegano", cena: "infra_diego"});
+            }
+            
+            if (!cenasVisitadas["infra_fernando"]) {
+                opcoes.push({ texto: "Falar com o mago da nova geração", cena: "infra_fernando"});
+            }
             
             if (todasCenasInfraVisitadas) {
-                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos"  });
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos" });
             }
             
             return opcoes;
-        },
+        }
     },
 
     infra_diego: {
@@ -259,33 +280,45 @@ const cenas = {
             if (!cenasVisitadas["infra_diego"]) {
                 inventory.ouro += 10;
                 cenasVisitadas["infra_diego"] = true;
+                atualizarInventario();
+                
+                if (cenasVisitadas["infra_luciano"] && cenasVisitadas["infra_wigori"] && cenasVisitadas["infra_fernando"]) {
+                    todasCenasInfraVisitadas = true;
+                }
             }
-    },
+        },
         opcoes: () => {
-            const opcoes = [
-                { texto: "Falar com o mago da nova geração", cena: "infra_fernando"},
-            ];
+            const opcoes = [];
+            
+            if (!cenasVisitadas["infra_fernando"]) {
+                opcoes.push({ texto: "Falar com o mago da nova geração", cena: "infra_fernando"});
+            }
             
             if (todasCenasInfraVisitadas) {
-                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos"  });
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninos" });
             }
             
             return opcoes;
-        },
+        }
     },
 
     infra_fernando: {
-        texto: "Caro cavaleiro, aproveite muito cada momento e etapa desse ciclo e que o relacionamento de vcs seja sempre repleto de alegria e sonhos realizados. Você merece, aceite este presente.",
+        texto: "Caro cavaleiro, aproveite muito cada momento e etapa desse ciclo e que o relacionamento de vocês seja sempre repleto de alegria e sonhos realizados. Você merece, aceite este presente.",
         imagem: "src/imagens/coin.png",
         acoes: () => {
             if (!cenasVisitadas["infra_fernando"]) {
                 inventory.ouro += 30;
                 cenasVisitadas["infra_fernando"] = true;
+                atualizarInventario();
+                
+                if (cenasVisitadas["infra_luciano"] && cenasVisitadas["infra_wigori"] && cenasVisitadas["infra_diego"]) {
+                    todasCenasInfraVisitadas = true;
+                }
             }
         },
         opcoes: [
-        { texto: "Explorar próxima tenda", cena: "ti_meninos"  }
-        ],
+            { texto: "Explorar próxima tenda", cena: "ti_meninos" }
+        ]
     },
 
     ti_meninos: {
@@ -304,7 +337,7 @@ const cenas = {
         acoes: () => {
             if (!cenasVisitadas["presente_gusta"]) {
                 cenasVisitadas["presente_gusta"] = true;
-                if (cenasVisitadas["presente_wagner"] && cenasVisitadas["presente_gui"]) {
+                if (cenasVisitadas["presente_wagner"] && cenasVisitadas["presente_gui"] ) {
                     todasCenasTiMeninosVisitadas = true;
                 }
             }
@@ -321,9 +354,7 @@ const cenas = {
             }
             
             if (todasCenasTiMeninosVisitadas) {
-                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -331,7 +362,7 @@ const cenas = {
     },
 
     presente_wagner: {
-        texto: "Oh nobre cavaleiro, que esta nova jornada seja repleta de alegrias e conquistas! Que vocês construam uma história linda juntos, cheia de amor e compreensão. Aceite este presente.",
+        texto: "Te Desejo tudo de mlhor nessa nova etapa da sua vida, que Deus abençõe a união de vocês e pode contar comigo para o que precisar TMJ! Aceite este presente.",
         imagem: "src/imagens/potion.png",
         acoes: () => {
             if (!cenasVisitadas["presente_wagner"]) {
@@ -344,18 +375,12 @@ const cenas = {
         opcoes: () => {
             const opcoes = [];
             
-            if (!cenasVisitadas["presente_gusta"]) {
-                opcoes.push({ texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"});
-            }
-            
             if (!cenasVisitadas["presente_gui"]) {
                 opcoes.push({ texto: "Falar com o mago dos negócios", cena: "presente_gui"});
             }
             
             if (todasCenasTiMeninosVisitadas) {
-                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
+                opcoes.push({ texto: "Explorar próxima tenda", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -363,40 +388,46 @@ const cenas = {
     },
 
     presente_gui: {
-        texto: "Oh nobre cavaleiro, que esta união seja abençoada e repleta de momentos felizes! Desejo a vocês uma vida de harmonia e realizações. Aceite este presente.",
-        imagem: "src/imagens/sword.png",
+        texto: "Ao grande mago Matheus, que partiu em batalha e se tornou um grande cavaleiro! parabéns por zerar essa fase de solteiro. Agora começa o modo duo e é só aproveitar! Aceite este presente.",
+        imagem: "src/imagens/coin.png",
         acoes: () => {
             if (!cenasVisitadas["presente_gui"]) {
+                inventory.ouro += 70;
                 cenasVisitadas["presente_gui"] = true;
-                if (cenasVisitadas["presente_gusta"] && cenasVisitadas["presente_wagner"]) {
-                    todasCenasTiMeninosVisitadas = true;
-                }
+                atualizarInventario();
             }
         },
-        opcoes: () => {
-            const opcoes = [];
-            
-            if (!cenasVisitadas["presente_gusta"]) {
-                opcoes.push({ texto: "Falar com o mago do desenvolvimento", cena: "presente_gusta"});
-            }
-            
-            if (!cenasVisitadas["presente_wagner"]) {
-                opcoes.push({ texto: "Falar com o mago do python", cena: "presente_wagner"});
-            }
-            
-            if (todasCenasTiMeninosVisitadas) {
-                opcoes.push({ texto: "Continuar explorando o acampamento", cena: "ti_meninas" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninos" });
-            }
-            
-            return opcoes;
-        }
+        opcoes: [
+            { texto: "Explorar próxima tenda", cena: "ti_meninas" }
+        ]
     },
 
     ti_meninas: {
         texto: "Você caminha pelo acampamento e encontra a tenda mais aconchegante do acampamento, nela você encontra as magas da Dataflorest... Elas estão te esperando e parece que cada uma deseja falar com você.",
         imagem: "src/imagens/magas_ti.png",
+        opcoes: [
+            { texto: "Falar com a líder dos magos", cena: "presente_thalia"},
+            { texto: "Falar com a maga dos testes", cena: "presente_my"},
+            { texto: "Falar com a maga dos dados", cena: "presente_lari"},
+            { texto: "Falar com a maga da fortuna", cena: "presente_jaque"}
+        ]
+    },
+
+    presente_thalia: {
+        texto: "Que surpresa agradável" +
+        "Diz a líder dos magos, ela olha com muito carinho para você e diz: Mazinho,  meu coração se enche de alegria ao ver você dar esse passo tão lindo e importante na sua vida! Até ontem, um pequeno ganfanhoto... O casamento é um presente de Deus, um elo sagrado entre dois propósitos e dois corações. Você merece viver esse amor abençoado, cheio de paz, fé e cumplicidade. Que Deus esteja sempre no centro da sua união, guiando cada escoha e fortalecendo cada desafio, pois agora, esse será o pilar mais forte da sua vida! Agora, torço para que sua nova jornada seja repleta de luz, amor e esperança. Que nunca falte carinho, diálogo e a presença de Deus no dia a dia de vocês. Sua felicidade também é a minha e sempre estarei torcendo por vocês. Aceite este presente, que lhe dou com muito amor.",
+        imagem: "src/imagens/bag_coins.png",
+        acoes: () => {
+            if (!cenasVisitadas["presente_thalia"]) {
+                inventory.ouro += 150;
+                cenasVisitadas["presente_thalia"] = true;
+                atualizarInventario();
+                
+                if (cenasVisitadas["presente_my"] && cenasVisitadas["presente_lari"] && cenasVisitadas["presente_jaque"]) {
+                    todasCenasTiMeninasVisitadas = true;
+                }
+            }
+        },
         opcoes: () => {
             const opcoes = [];
             
@@ -414,8 +445,6 @@ const cenas = {
             
             if (todasCenasTiMeninasVisitadas) {
                 opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -429,7 +458,9 @@ const cenas = {
             if (!cenasVisitadas["presente_my"]) {
                 inventory.ouro += 50;
                 cenasVisitadas["presente_my"] = true;
-                if (cenasVisitadas["presente_lari"] && cenasVisitadas["presente_jaque"]) {
+                atualizarInventario();
+                
+                if (cenasVisitadas["presente_thalia"] && cenasVisitadas["presente_lari"] && cenasVisitadas["presente_jaque"]) {
                     todasCenasTiMeninasVisitadas = true;
                 }
             }
@@ -447,8 +478,6 @@ const cenas = {
             
             if (todasCenasTiMeninasVisitadas) {
                 opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -456,23 +485,21 @@ const cenas = {
     },
 
     presente_lari: {
-        texto: "Oh nobre cavaleiro, que seu casamento seja repleto de dados de felicidade! Desejo que cada dia seja um novo registro de amor no banco de dados do seu relacionamento. Aceite este presente.",
+        texto: "Meu querido Matheus, toda felicidade e amor para você e sua princesa nessa nova etapa. Aceite este presente.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             if (!cenasVisitadas["presente_lari"]) {
                 inventory.ouro += 100;
                 cenasVisitadas["presente_lari"] = true;
-                if (cenasVisitadas["presente_my"] && cenasVisitadas["presente_jaque"]) {
+                atualizarInventario();
+                
+                if (cenasVisitadas["presente_thalia"] && cenasVisitadas["presente_my"] && cenasVisitadas["presente_jaque"]) {
                     todasCenasTiMeninasVisitadas = true;
                 }
             }
         },
         opcoes: () => {
             const opcoes = [];
-            
-            if (!cenasVisitadas["presente_my"]) {
-                opcoes.push({ texto: "Falar com a maga dos testes", cena: "presente_my"});
-            }
             
             if (!cenasVisitadas["presente_jaque"]) {
                 opcoes.push({ texto: "Falar com a maga da fortuna", cena: "presente_jaque"});
@@ -480,8 +507,6 @@ const cenas = {
             
             if (todasCenasTiMeninasVisitadas) {
                 opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
             }
             
             return opcoes;
@@ -489,41 +514,39 @@ const cenas = {
     },
 
     presente_jaque: {
-        texto: "Oh nobre cavaleiro, leio nas estrelas que seu futuro será repleto de felicidade! Que a sorte sempre esteja ao lado de vocês nesta nova jornada. Aceite este presente.",
+        texto: "Oh nobre cavaleiro, Matheus, parabéns ao commit mais importante da sua vida .Este será o bug que você jamais vai querer consertar! Rs. Felicidades!!! Receba este presente",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             if (!cenasVisitadas["presente_jaque"]) {
                 inventory.ouro += 100;
                 cenasVisitadas["presente_jaque"] = true;
-                if (cenasVisitadas["presente_my"] && cenasVisitadas["presente_lari"]) {
-                    todasCenasTiMeninasVisitadas = true;
-                }
+                atualizarInventario();
             }
         },
-        opcoes: () => {
-            const opcoes = [];
-            
-            if (!cenasVisitadas["presente_my"]) {
-                opcoes.push({ texto: "Falar com a maga dos testes", cena: "presente_my"});
-            }
-            
-            if (!cenasVisitadas["presente_lari"]) {
-                opcoes.push({ texto: "Falar com a maga dos dados", cena: "presente_lari"});
-            }
-            
-            if (todasCenasTiMeninasVisitadas) {
-                opcoes.push({ texto: "Seguir para o centro da floresta", cena: "encontro_dragao" });
-            } else if (opcoes.length === 0) {
-                opcoes.push({ texto: "Voltar", cena: "ti_meninas" });
-            }
-            
-            return opcoes;
-        }
+        opcoes: [
+            { texto: "Seguir para o centro da floresta", cena: "encontro_robson" }
+        ]
+    },
+
+    encontro_robson: {
+        texto: "Você avança para a saída do acampamento e encontra o Ancião dos magos, ele fica muito feliz em ver que você voltou para o acampamento e deseja falar com você.",
+        imagem: "src/imagens/mago_barbudo.png",
+        opcoes: [
+            { texto: "Falar com o Ancião dos magos", cena: "presente_robson" }
+        ]
+    },
+
+    presente_robson: {
+        texto: "Matheus, agora que você deixa seus pais para constituir a sua familia, o menino de antes vai se tornar o homem de agora. Será uma vida compartilhada que nos ensina direitos, deveres e limites. Que este casamento seja bem vivido, e seja para toda a vida. Em momentos de dificuldade lembre-se do amor que o levou ao altar, em momentos de alegria continue se lembrando do amor que o levou ao altar. Sempre tenha Deus no coração e nas atitudes, estenda sempre seus joelhos ao chão para agradecer e pedir ajuda. Parabéns pelo casamento, que seja uma vida abençoada, receba este presente do menino Ancião",
+        imagem: "src/imagens/sword.png",
+        opcoes: [
+            { texto: "Receber espada mística e seguir pelo caminho até o final da Dataflorest", cena: "encontro_dragao" },
+        ]
     },
 
     encontro_dragao: {
         texto: "Você chega ao centro da floresta e encontra um dragão feroz. Ele está guardando o covil, o dragão ruge e se prepara para atacar!",
-        imagem: "src/imagens/dragon.png",
+        imagem: "src/imagens/dragao.png",
         opcoes: [
             { texto: "Utilizar botas de agilidade para desviar do ataque", cena: "desviar_dano"},
             { texto: "Tentar acerto com a espada mística", cena: "atacar_dragao"},
@@ -542,10 +565,10 @@ const cenas = {
 
     atacar_dragao: {
         texto: "Você tenta acertar o dragão com a espada mística e acerta o golpe! O dragão grita de dor, mas ainda está de pé.",
-        imagem: "src/imagens/dragon.png",
+        imagem: "src/imagens/dragao.png",
         opcoes: [
-            { texto: "Utilizar ataque mágico", cena: "ataque_magico" },
             { texto: "Utilizar poção de vida", cena: "usar_pocao_vida" },
+            { texto: "Utilizar ataque mágico", cena: "ataque_magico" }
         ]
     },
 
@@ -571,6 +594,14 @@ const cenas = {
         imagem: "src/imagens/ring.png",
         opcoes: [
             { texto: "Entrar no covil", cena: "saquear_tesouro" },
+        ]
+    },
+
+    entrar_covil: {
+        texto: "Você se aproxima do covil do dragão e encontra um baú. Deseja saquear o baú?",
+        imagem: "src/imagens/caverna.pgn",
+        opcoes: [
+            { texto: "Saquear o baú", cena: "saquear_tesouro" },
         ]
     },
 
