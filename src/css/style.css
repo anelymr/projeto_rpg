@@ -49,7 +49,7 @@ body{
 
 button {
   background-color: #222;
-  border: 4px solid; rgba(0, 255, 76, 0.863);
+  border: 4px solid rgba(0, 255, 76, 0.863);
   border-color: rgba(0, 255, 76, 0.863) rgba(0, 100, 30, 0.863) rgba(0, 100, 30, 0.863) rgba(0, 148, 44, 0.863);
   font-family: "Press Start 2P", monospace;
   font-size: 9px;
