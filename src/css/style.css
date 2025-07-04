@@ -53,6 +53,7 @@ button {
   border-color: rgba(0, 255, 76, 0.863) rgba(0, 100, 30, 0.863) rgba(0, 100, 30, 0.863) rgba(0, 148, 44, 0.863);
   font-family: "Press Start 2P", monospace;
   font-size: 9px;
+  line-height: 1.8;
   text-transform: uppercase;
   color: rgba(0, 255, 76, 0.863);
   padding: 8px 16px;
