@@ -414,8 +414,7 @@ const cenas = {
     },
 
     presente_thalia: {
-        texto: "Que surpresa agradável" +
-        "Diz a líder dos magos, ela olha com muito carinho para você e diz: Mazinho,  meu coração se enche de alegria ao ver você dar esse passo tão lindo e importante na sua vida! Até ontem, um pequeno ganfanhoto... O casamento é um presente de Deus, um elo sagrado entre dois propósitos e dois corações. Você merece viver esse amor abençoado, cheio de paz, fé e cumplicidade. Que Deus esteja sempre no centro da sua união, guiando cada escoha e fortalecendo cada desafio, pois agora, esse será o pilar mais forte da sua vida! Agora, torço para que sua nova jornada seja repleta de luz, amor e esperança. Que nunca falte carinho, diálogo e a presença de Deus no dia a dia de vocês. Sua felicidade também é a minha e sempre estarei torcendo por vocês. Aceite este presente, que lhe dou com muito amor.",
+        texto: "Que surpresa agradável...Diz a líder dos magos, ela olha com muito carinho para você e diz: Mazinho,  meu coração se enche de alegria ao ver você dar esse passo tão lindo e importante na sua vida! Até ontem, um pequeno ganfanhoto... O casamento é um presente de Deus, um elo sagrado entre dois propósitos e dois corações. Você merece viver esse amor abençoado, cheio de paz, fé e cumplicidade. Que Deus esteja sempre no centro da sua união, guiando cada escoha e fortalecendo cada desafio, pois agora, esse será o pilar mais forte da sua vida! Agora, torço para que sua nova jornada seja repleta de luz, amor e esperança. Que nunca falte carinho, diálogo e a presença de Deus no dia a dia de vocês. Sua felicidade também é a minha e sempre estarei torcendo por vocês. Aceite este presente, que lhe dou com muito amor.",
         imagem: "src/imagens/bag_coins.png",
         acoes: () => {
             if (!cenasVisitadas["presente_thalia"]) {
